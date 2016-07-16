@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.jason.listviewtest.activity.CityDetailActivity">
+
+    <LinearLayout
+            android:id="@+id/city_detail_layout_image"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:gravity="bottom"
+            android:background="@drawable/placeholder">
+
+        <TextView
+            android:id="@+id/city_detail_province"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="江苏"/>
+
+        <TextView
+            android:id="@+id/city_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:textColor="@color/white"
+            android:textSize="45sp"
+            android:text="南京"/>
+
+
+        <TextView
+            android:id="@+id/city_detail_simpledes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:text="六朝金粉地 旧时王谢堂"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:gravity="center_horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <include layout="@layout/detail_view_optile"
+                android:layout_gravity="center"
+                android:layout_marginRight="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+            <include layout="@layout/detail_view_optile"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/city_detail_code"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:text="区 号： 025"/>
+            <TextView
+                android:id="@+id/city_detail_postcode"
+                android:gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="邮 编： 225000"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/city_detail_pager"
+        android:layout_width="match_parent"
+        android:paddingTop="6dp"
+        android:layout_height="0dp"
+        android:layout_weight="4">
+
+        <android.support.v4.view.PagerTabStrip
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/city_detail_pager_tab">
+        </android.support.v4.view.PagerTabStrip>
+
+    </android.support.v4.view.ViewPager>
+
+</LinearLayout>

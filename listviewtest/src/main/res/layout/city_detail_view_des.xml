@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/city_des_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:textSize="16sp"
+        android:gravity="center_vertical"
+        android:lineSpacingMultiplier="1.25"
+        android:text="有着三千余年的建城史和八百五十余年的建都史的北京，是中华人民共和国的首都，位于华北平原北端。它荟萃了元、明、清以来的中华文化，拥有众多名胜古迹和人文景观，是世界上拥有世界文化遗产最多的城市"/>
+
+</LinearLayout>
