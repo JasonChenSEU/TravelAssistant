@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_city_list"
             android:icon="@drawable/ic_menu_gallery"
             android:title="城市列表" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_spot_list"
             android:icon="@drawable/ic_menu_gallery"
             android:title="景点列表" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_footprint"
             android:icon="@drawable/ic_menu_camera"
             android:title="足迹" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_query"
             android:icon="@drawable/ic_menu_share"
             android:title="查询" />
     </group>
@@ -24,7 +24,7 @@
     <item android:title="Settings">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_menu_manage"
                 android:title="设置" />
         </menu>

@@ -38,6 +38,8 @@ public class Utils {
      * Used only by CityList
      */
     public static void initProvinceMap(){
+        if(mapProvince.size() != 0)
+            return;
         String[] strProvince = {"直辖市","安徽","福建","广西","河北","河南","黑龙江","湖南","江苏","江西","内蒙古","山东","四川","西藏","新疆","云南","浙江"};
         for(int i = 0; i < strProvince.length; i++)
             mapProvince.put(strProvince[i],i);
@@ -106,6 +108,8 @@ public class Utils {
     }
 
     public static void initCityList(Context context) {
+        if(listCity.size() != 0)
+            return;
         listCity = XMLParserHelper.ParseXMLFromCityData(context);
         Collections.sort(listCity, new Comparator<City>() {
             @Override
@@ -122,6 +126,8 @@ public class Utils {
      * Init spot base List
      */
     public static void initSpotList(Context context){
+        if(listSpot.size() != 0)
+            return;
         listSpot = XMLParserHelper.ParseXMLFromSpotData(context);
         Collections.sort(listSpot, new Comparator<SpotBase>() {
             @Override
@@ -138,5 +144,20 @@ public class Utils {
 //        }
 //    }
 
+    public static SpotBase findSpot(String strSpotName){
+        for(SpotBase sb : listSpot){
+            if(sb.getStrSpotName().equals(strSpotName))
+                return sb;
+        }
+        return null;
+    }
+
+    public static City findCity(String strCityName){
+        for(City city : listCity){
+            if(city.getStrCityName().equals(strCityName))
+                return city;
+        }
+        return null;
+    }
 
 }
