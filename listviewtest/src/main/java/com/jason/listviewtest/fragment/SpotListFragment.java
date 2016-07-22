@@ -1,8 +1,9 @@
-package com.jason.listviewtest.activity;
+package com.jason.listviewtest.fragment;
+
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,29 +11,75 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jason.listviewtest.R;
-import com.jason.listviewtest.adapter.SpotListAdapter;
 import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.R;
+import com.jason.listviewtest.activity.SpotDetailActivity;
+import com.jason.listviewtest.adapter.SpotListAdapter;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
 import com.jason.listviewtest.model.SpotBase;
 import com.jason.listviewtest.view.HeaderView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 
-public class SpotListActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SpotListFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class SpotListFragment extends Fragment {
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
 
-    private static final String TAG = "SpotListActivity";
+    private String mParam1;
+    private String mParam2;
+
+    private View mFragView;
     private RecyclerView mRecyclerView;
+
+    public SpotListFragment() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment SpotListFragment.
+     */
+    public static SpotListFragment newInstance(String param1, String param2) {
+        SpotListFragment fragment = new SpotListFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spot_list);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        mFragView = inflater.inflate(R.layout.activity_spot_list, container, false);
+        mRecyclerView = (RecyclerView) mFragView.findViewById(R.id.recyclerView_spot);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
-        Utils.initSpotList(SpotListActivity.this);
+        initRecyclerView();
+        return mFragView;
+    }
 
+    private void initRecyclerView() {
         SpotListWithHeaderAdapter adapter = new SpotListWithHeaderAdapter();
 
         if(!Utils.listSpot.isEmpty()){
@@ -44,7 +91,7 @@ public class SpotListActivity extends AppCompatActivity {
             public void onItemClick(View view, int position) {
                 SpotBase sb = Utils.listSpot.get(position);
                 if(sb != null){
-                    Intent i = new Intent(SpotListActivity.this,SpotDetailActivity.class);
+                    Intent i = new Intent(getContext(),SpotDetailActivity.class);
                     i.putExtra("SpotPos", position);
                     startActivity(i);
                 }
@@ -89,7 +136,7 @@ public class SpotListActivity extends AppCompatActivity {
     }
 
     private class SpotListWithHeaderAdapter extends SpotListAdapter<RecyclerView.ViewHolder>
-            implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>{
+            implements StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
         private RecyclerViewItemClickListener mListener = null;
 
