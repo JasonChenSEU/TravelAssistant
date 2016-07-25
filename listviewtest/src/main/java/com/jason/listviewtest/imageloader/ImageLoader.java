@@ -140,7 +140,9 @@ public class ImageLoader {
         if(!diskCacheDir.exists())
             diskCacheDir.mkdirs();
 
-        if(getUsableSpace(diskCacheDir) > DISK_CACHE_SIZE){
+        long space = getUsableSpace(diskCacheDir);
+
+        if(space > DISK_CACHE_SIZE){
             try {
                 mDiskLruCache = DiskLruCache.open(diskCacheDir,1,1,DISK_CACHE_SIZE);
                 mIsDiskCacheCreated = true;
@@ -163,15 +165,36 @@ public class ImageLoader {
     }
 
     /**
+     * Get Cached Size
+     *
+     * @return size (n*1024*1024)
+     */
+    public long getCachedSize(){
+        if(!mIsDiskCacheCreated){
+            Log.v(TAG,"Error encountered. DiskLruCache not create.");
+            return 0L;
+        }
+        return mDiskLruCache.size();
+    }
+
+    public void clearCache() throws IOException {
+        if(!mIsDiskCacheCreated){
+            Log.v(TAG,"Error encountered. DiskLruCache not create.");
+        }
+        mDiskLruCache.delete();
+    }
+
+    /**
      * Get Cache directory
      * @param mContext Context
      * @param uniqueName LastPathName:identify different cache content
      * @return File
      */
     private File getDiskCacheDir(Context mContext, String uniqueName) {
+        boolean externalStorageAvailable = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+                || !Environment.isExternalStorageRemovable();
         String cachePath;
-        if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                || !Environment.isExternalStorageRemovable())
+        if(externalStorageAvailable)
             //Sd card exists and is not removable
             cachePath = mContext.getExternalCacheDir().getPath();
         else

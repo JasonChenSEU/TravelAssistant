@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,23 +14,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.jason.listviewtest.Helpter.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.fragment.CityListFragment;
 import com.jason.listviewtest.fragment.RecommendFragment;
 import com.jason.listviewtest.fragment.SpotListFragment;
-import com.jason.listviewtest.imageloader.ImageLoader;
-import com.jason.listviewtest.model.City;
-import com.jason.listviewtest.model.SpotBase;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainPageActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -132,7 +122,8 @@ public class MainPageActivity extends AppCompatActivity
         } else if (id == R.id.nav_query) {
 
         } else if (id == R.id.nav_setting) {
-
+            Intent i = new Intent(MainPageActivity.this, SettingActivity.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
