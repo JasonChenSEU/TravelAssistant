@@ -6,4 +6,10 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="about_title">TravelAssistant</string>
+    <string name="about_subtitle">For Android   V1.0.0</string>
+    <string name="author">Jason</string>
+    <string name="email">jcchen_seu@163.com</string>
+    <string name="source_spot">百度LBS开放平台车联网API\n去哪儿票务API\n中国自助游(2013) 电子版</string>
+    <string name="source_weather">百度LBS开放平台车联网API</string>
 </resources>

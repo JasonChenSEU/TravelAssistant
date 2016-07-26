@@ -86,7 +86,8 @@ public class ImageLoader {
                 case MESSAGE_POST_RESULT_LAYOUT:
                     LoaderResultForLayout loaderResultForLayout = (LoaderResultForLayout) msg.obj;
                     LinearLayout mlayout = loaderResultForLayout.mlayout;
-                    mlayout.setBackground(new BitmapDrawable(loaderResultForLayout.bitmap));
+                    mlayout.setBackground(new BitmapDrawable(mContext.getResources(),loaderResultForLayout.bitmap));
+//                    mlayout.setBackground(new BitmapDrawable(loaderResultForLayout.bitmap));
                     break;
             }
 
@@ -177,6 +178,10 @@ public class ImageLoader {
         return mDiskLruCache.size();
     }
 
+    /**
+     * 清空Disk缓存
+     * @throws IOException
+     */
     public void clearCache() throws IOException {
         if(!mIsDiskCacheCreated){
             Log.v(TAG,"Error encountered. DiskLruCache not create.");
@@ -490,6 +495,13 @@ public class ImageLoader {
         THREAD_POOL_EXECUTOR.execute(loadBitmapTast);
     }
 
+    /**
+     * bind bitmap when target view is linearLayout and need to set it's background
+     * @param uri uri
+     * @param mlayout layout which background need to be set
+     * @param reqWidth reqWidth
+     * @param reqHeight reqHeight
+     */
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void bindBitmap(final String uri, final LinearLayout mlayout,
                            final int reqWidth, final int reqHeight){

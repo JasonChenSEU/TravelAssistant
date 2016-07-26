@@ -48,9 +48,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SettingActivity">
-
-        </activity>
+        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.jason.listviewtest.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -77,6 +78,8 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.setting_clear_text_cache:
                 break;
             case R.id.setting_about:
+                Intent i = new Intent(SettingActivity.this, AboutActivity.class);
+                startActivity(i);
                 break;
         }
 
