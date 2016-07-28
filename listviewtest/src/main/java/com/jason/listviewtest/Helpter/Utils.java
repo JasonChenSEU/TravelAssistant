@@ -18,8 +18,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Jason on 2016/6/29.
@@ -158,6 +160,23 @@ public class Utils {
                 return city;
         }
         return null;
+    }
+
+    public static String[] autoCompleteSources(){
+        Set<String> set = new HashSet<>();
+        for(City city : listCity)
+            set.add(city.getStrCityName());
+        for(SpotBase spotBase : listSpot) {
+            set.add(spotBase.getStrSpotName());
+            set.add(spotBase.getStrSpotProvince());
+        }
+
+        String[] res = new String[set.size()];
+        int i = 0;
+        for (String s: set) {
+            res[i++] = s;
+        }
+        return res;
     }
 
 }

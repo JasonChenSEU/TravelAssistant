@@ -120,6 +120,8 @@ public class MainPageActivity extends AppCompatActivity
             }
             mCurrentFragment = 0;
         } else if (id == R.id.nav_query) {
+            Intent i = new Intent(MainPageActivity.this, QueryActivity.class);
+            startActivity(i);
 
         } else if (id == R.id.nav_setting) {
             Intent i = new Intent(MainPageActivity.this, SettingActivity.class);
