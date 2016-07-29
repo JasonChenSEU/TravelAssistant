@@ -6,6 +6,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:background="@drawable/detail_view_optile_shape"
+    android:clickable="true"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 

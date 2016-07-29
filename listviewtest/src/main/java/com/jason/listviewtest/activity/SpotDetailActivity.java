@@ -1,14 +1,17 @@
 package com.jason.listviewtest.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jason.listviewtest.Helpter.APIHelper;
 import com.jason.listviewtest.R;
@@ -48,6 +51,9 @@ public class SpotDetailActivity extends AppCompatActivity {
 
     private String strSpotName;
 
+    private LinearLayout mTile_Book;
+    private LinearLayout mTile_Weather;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +72,9 @@ public class SpotDetailActivity extends AppCompatActivity {
         tvSpotRate = (TextView) findViewById(R.id.spot_detail_rate);
 
         mLayout = (LinearLayout) findViewById(R.id.spot_detail_layout_image);
+
+        mTile_Book = (LinearLayout) findViewById(R.id.spot_detail_book);
+        mTile_Weather = (LinearLayout) findViewById(R.id.spot_detail_weather);
 
         imageLoader = ImageLoader.build(SpotDetailActivity.this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot_content);
@@ -153,7 +162,7 @@ public class SpotDetailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<String> strings) {
             try {
-                Spot spot = new Spot(mSpotBase);
+                final Spot spot = new Spot(mSpotBase);
 
                 if(!"-1".equals(spot.getStrQueryID())) {
                     JSONObject jsonObject = new JSONObject(strings.get(0));
@@ -197,7 +206,7 @@ public class SpotDetailActivity extends AppCompatActivity {
         }
     }
 
-    private void updateUI(Spot spot) {
+    private void updateUI(final Spot spot) {
         String[] rate = {"★☆☆☆☆","★★☆☆☆","★★★☆☆","★★★★☆","★★★★★"};
 
         tvSpotName.setText(spot.getStrSpotName());
@@ -208,6 +217,24 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         SpotContentAdapter adapter = new SpotContentAdapter(this);
         adapter.initList(spot);
+
+        mTile_Book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SpotDetailActivity.this, WebViewActivity.class);
+                i.putExtra("URL", spot.getStrBookUrl());
+                startActivity(i);
+            }
+        });
+
+        mTile_Weather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(SpotDetailActivity.this, WeatherActivity.class);
+                i.putExtra("Name", spot.getStrSpotCity());
+                startActivity(i);
+            }
+        });
 
         mRecyclerView.setAdapter(adapter);
 

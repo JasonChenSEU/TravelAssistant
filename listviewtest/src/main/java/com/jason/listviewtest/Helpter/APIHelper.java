@@ -10,6 +10,8 @@ public class APIHelper {
 
     public static final String QUNAER_TICKET_URL = "http://apis.baidu.com/apistore/qunaerticket/querydetail";
 
-    public static final String BAIDU_SOPT_QUERY_URL = " http://api.map.baidu.com/telematics/v3/travel_attractions";
+    public static final String BAIDU_SOPT_QUERY_URL = "http://api.map.baidu.com/telematics/v3/travel_attractions";
+
+    public static final String BAIDU_WEATHER_QUERY_URL_FORMAT = "http://api.map.baidu.com/telematics/v3/weather?location=%s&ak=%s";
 
 }
