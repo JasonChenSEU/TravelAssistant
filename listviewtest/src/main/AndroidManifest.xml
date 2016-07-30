@@ -55,7 +55,7 @@
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".activity.WebViewActivity" />
         <activity android:name=".activity.WeatherActivity" />
-        <activity android:name=".activity.CityQueryList" >
+        <activity android:name=".activity.CityQueryListActivity" >
         </activity>
     </application>
 

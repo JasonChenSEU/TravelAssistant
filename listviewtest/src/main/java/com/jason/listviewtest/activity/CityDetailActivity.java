@@ -148,7 +148,10 @@ public class CityDetailActivity extends AppCompatActivity {
         mTileSpot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(CityDetailActivity.this, "Jump to Spot choose activity", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(CityDetailActivity.this, CityQueryListActivity.class);
+                i.putExtra("CityProvince", city.getStrProvince());
+                i.putExtra("CityName", city.getStrCityName());
+                startActivity(i);
             }
         });
 
