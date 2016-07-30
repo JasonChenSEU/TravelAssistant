@@ -1,6 +1,7 @@
 package com.jason.listviewtest.activity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,8 +9,10 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.Helpter.Utils;
@@ -38,6 +41,10 @@ public class CityDetailActivity extends AppCompatActivity {
 
     //Header Layout
     private LinearLayout mLayout;
+
+    private LinearLayout mTileSpot;
+    private LinearLayout mTileWeather;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,7 @@ public class CityDetailActivity extends AppCompatActivity {
         TextView tv3 = (TextView) view3.findViewById(R.id.city_des_detail);
         tv3.setText("       " + city.getStrTimeRecmd());
         tv3.setMovementMethod(new ScrollingMovementMethod());
+
 
         //Set header layout text
         initAndSetOtherTextViews(city);
@@ -117,7 +125,7 @@ public class CityDetailActivity extends AppCompatActivity {
         mViewPager.setAdapter(pa);
     }
 
-    private void initAndSetOtherTextViews(City city) {
+    private void initAndSetOtherTextViews(final City city) {
         mLayout = (LinearLayout) findViewById(R.id.city_detail_layout_image);
         mTvCityName = (TextView) findViewById(R.id.city_detail_name);
         mTvCityProvince = (TextView) findViewById(R.id.city_detail_province);
@@ -132,6 +140,30 @@ public class CityDetailActivity extends AppCompatActivity {
         mTvCitySimpleDes.setText(city.getStrCitySimpleDes());
         mTvCityCode.setText("区 号： " + city.getStrCityCode());
         mTvCityPostcode.setText("邮 编： " + city.getStrPostCode());
+
+        mTileSpot = (LinearLayout) findViewById(R.id.city_detail_spot);
+        ((ImageView)mTileSpot.findViewById(R.id.tile_image_view)).
+                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.spot));
+        ((TextView)mTileSpot.findViewById(R.id.tile_title)).setText("景 点");
+        mTileSpot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(CityDetailActivity.this, "Jump to Spot choose activity", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        mTileWeather = (LinearLayout) findViewById(R.id.city_detail_weather);
+        ((ImageView)mTileWeather.findViewById(R.id.tile_image_view)).
+                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.weather));
+        ((TextView)mTileWeather.findViewById(R.id.tile_title)).setText("天 气");
+        mTileWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(CityDetailActivity.this, WeatherActivity.class);
+                i.putExtra("Name", city.getStrCityName());
+                startActivity(i);
+            }
+        });
 
     }
 

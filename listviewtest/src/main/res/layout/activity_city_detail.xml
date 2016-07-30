@@ -61,6 +61,7 @@
             android:orientation="horizontal">
 
             <include layout="@layout/detail_view_optile"
+                android:id="@+id/city_detail_spot"
                 android:layout_gravity="center"
                 android:layout_marginRight="20dp"
                 android:layout_width="wrap_content"
@@ -68,6 +69,7 @@
 
 
             <include layout="@layout/detail_view_optile"
+                android:id="@+id/city_detail_weather"
                 android:layout_marginLeft="20dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"

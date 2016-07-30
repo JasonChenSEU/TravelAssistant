@@ -2,6 +2,8 @@ package com.jason.listviewtest.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -74,11 +77,20 @@ public class SpotDetailActivity extends AppCompatActivity {
         mLayout = (LinearLayout) findViewById(R.id.spot_detail_layout_image);
 
         mTile_Book = (LinearLayout) findViewById(R.id.spot_detail_book);
+        ((ImageView)mTile_Book.findViewById(R.id.tile_image_view)).
+                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.book));
+        ((TextView)mTile_Book.findViewById(R.id.tile_title)).setText("购 票");
+
         mTile_Weather = (LinearLayout) findViewById(R.id.spot_detail_weather);
+        ((ImageView)mTile_Weather.findViewById(R.id.tile_image_view)).
+                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.weather));
+        ((TextView)mTile_Weather.findViewById(R.id.tile_title)).setText("天 气");
 
         imageLoader = ImageLoader.build(SpotDetailActivity.this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot_content);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+
+
 
         List<Spot> resSpot = queryFromDB(strSpotName);
 

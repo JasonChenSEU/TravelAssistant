@@ -11,12 +11,14 @@
     android:layout_height="wrap_content">
 
     <com.jason.listviewtest.model.SquareImageView
+        android:id="@+id/tile_image_view"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_gravity="center"
         android:src="@drawable/refresh"/>
 
     <TextView
+        android:id="@+id/tile_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
