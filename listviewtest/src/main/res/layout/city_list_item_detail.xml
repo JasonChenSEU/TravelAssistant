@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:layout_marginTop="4dp"
     android:layout_marginBottom="4dp"
-    android:layout_marginLeft="28dp">
+    android:paddingLeft="28dp"
+    android:background="@drawable/item_background">
 
     <com.jason.listviewtest.model.SquareImageView
         android:layout_width="70dp"

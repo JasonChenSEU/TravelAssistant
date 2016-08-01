@@ -16,11 +16,7 @@
 
         <RelativeLayout
             android:id="@+id/setting_clear_img_cache"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:padding="16dp"
-            android:gravity="center_vertical" >
+            style="@style/setting_item_layout">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -47,11 +43,7 @@
 
         <RelativeLayout
             android:id="@+id/setting_clear_text_cache"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:padding="16dp"
-            android:gravity="center_vertical" >
+            style="@style/setting_item_layout" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -83,11 +75,7 @@
 
         <RelativeLayout
             android:id="@+id/setting_about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:padding="16dp"
-            android:gravity="center_vertical" >
+            style="@style/setting_item_layout" >
 
             <TextView
                 android:layout_width="wrap_content"
