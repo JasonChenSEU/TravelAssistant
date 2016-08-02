@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.jason.listviewtest.Helpter.Utils;
@@ -117,6 +118,7 @@ public class CityQueryListActivity extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.spot_list_item_detail,parent,false);
+            view.setPadding(16,6,0,6);
 
             return new SpotItemView(view, mListener);
         }

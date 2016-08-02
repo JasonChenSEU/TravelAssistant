@@ -205,6 +205,7 @@ public class QueryActivity extends AppCompatActivity {
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.spot_list_item_detail,parent,false);
+            view.setPadding(16,6,0,6);
 
             return new SpotItemView(view, mListener);
         }

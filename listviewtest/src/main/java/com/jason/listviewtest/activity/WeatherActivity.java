@@ -1,10 +1,12 @@
 package com.jason.listviewtest.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -63,6 +65,8 @@ public class WeatherActivity extends AppCompatActivity {
     ImageView imgWea3;
 
     private String strCurrentHandle;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -291,6 +295,10 @@ public class WeatherActivity extends AppCompatActivity {
             return info;
         }
 
+        @Override
+        protected void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(WeatherActivity.this, "Loading...","数据获取中");
+        }
 
         @Override
         protected void onPostExecute(WeatherInfo info) {
@@ -368,6 +376,7 @@ public class WeatherActivity extends AppCompatActivity {
 
             tvUpdateTime.setText(date + " 发布");
 
+            mProgressDialog.dismiss();
 
 //            pB.setVisibility(View.INVISIBLE);
         }

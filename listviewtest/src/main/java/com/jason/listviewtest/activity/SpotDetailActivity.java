@@ -1,5 +1,6 @@
 package com.jason.listviewtest.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -56,6 +57,8 @@ public class SpotDetailActivity extends AppCompatActivity {
 
     private LinearLayout mTile_Book;
     private LinearLayout mTile_Weather;
+
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +175,11 @@ public class SpotDetailActivity extends AppCompatActivity {
         }
 
         @Override
+        protected void onPreExecute() {
+            mProgressDialog = ProgressDialog.show(SpotDetailActivity.this,"Loading...", "数据获取中");
+        }
+
+        @Override
         protected void onPostExecute(List<String> strings) {
             try {
                 final Spot spot = new Spot(mSpotBase);
@@ -210,6 +218,8 @@ public class SpotDetailActivity extends AppCompatActivity {
                 saveSpotToDB(SpotDetailActivity.this,spot);
 
                 updateUI(spot);
+
+                mProgressDialog.dismiss();
 
             } catch (JSONException e) {
                 e.printStackTrace();
