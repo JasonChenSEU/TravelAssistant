@@ -3,23 +3,27 @@ package com.jason.listviewtest.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.UriPermission;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jason.listviewtest.Helpter.APIHelper;
-import com.jason.listviewtest.R;
 import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.R;
 import com.jason.listviewtest.adapter.SpotContentAdapter;
 import com.jason.listviewtest.db.TravelDB;
 import com.jason.listviewtest.imageloader.ImageLoader;
@@ -38,20 +42,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SpotDetailActivity extends AppCompatActivity {
-
-    private TextView tvSpotName;
-    private TextView tvSpotRate;
-    private LinearLayout mLayout;
+public class SpotDetailScrollActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
 
     private SpotBase mSpotBase = null;
-
-    //ImageLoader
-    private ImageLoader imageLoader;
-
-    private final static String TAG = "SpotDetailActivity";
 
     private String strSpotName;
 
@@ -60,11 +55,42 @@ public class SpotDetailActivity extends AppCompatActivity {
 
     private ProgressDialog mProgressDialog;
 
+    private ImageLoader imageLoader;
+
+    private ImageView mImgView;
+
+    private NestedScrollView view;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spot_detail);
+        setContentView(R.layout.activity_spot_detail_scroll);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("上海");
+//        toolbar.setSubtitle("Recommend: 5stars");
+        setSupportActionBar(toolbar);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+
+        Utils.initSpotList(this);
+        initDataAndUI();
+
+    }
+
+    private void initDataAndUI() {
         if(!Utils.listSpot.isEmpty())
             Utils.initSpotList(this);
 
@@ -72,30 +98,31 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         strSpotName = mSpotBase.getStrSpotName();
 
-//        String jsonResult = request(strTicketUrl, strTicketArgs);
-
-        tvSpotName = (TextView) findViewById(R.id.spot_detail_name);
-        tvSpotRate = (TextView) findViewById(R.id.spot_detail_rate);
-
-        mLayout = (LinearLayout) findViewById(R.id.spot_detail_layout_image);
-
-        mTile_Book = (LinearLayout) findViewById(R.id.spot_detail_book);
+        mTile_Book = (LinearLayout) findViewById(R.id.spot_detail_book_scroll);
         ((ImageView)mTile_Book.findViewById(R.id.tile_image_view)).
                 setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.book));
         ((TextView)mTile_Book.findViewById(R.id.tile_title)).setText("购 票");
 
-        mTile_Weather = (LinearLayout) findViewById(R.id.spot_detail_weather);
+        mTile_Weather = (LinearLayout) findViewById(R.id.spot_detail_weather_scroll);
         ((ImageView)mTile_Weather.findViewById(R.id.tile_image_view)).
                 setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.weather));
         ((TextView)mTile_Weather.findViewById(R.id.tile_title)).setText("天 气");
 
-        imageLoader = ImageLoader.build(SpotDetailActivity.this);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot_content);
+        imageLoader = ImageLoader.build(SpotDetailScrollActivity.this);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot_content_scroll);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
-
+        mImgView = (ImageView) findViewById(R.id.spot_detail_image);
 
         List<Spot> resSpot = queryFromDB(strSpotName);
+
+        view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
+        view.post(new Runnable() {
+            @Override
+            public void run() {
+                view.fullScroll(NestedScrollView.FOCUS_UP);
+            }
+        });
 
         if(resSpot.size() == 0) {
             //Cannot find info from db,download it from internet.
@@ -108,16 +135,15 @@ public class SpotDetailActivity extends AppCompatActivity {
         }else{
             updateUI(resSpot.get(0));
         }
-
     }
 
     private List<Spot> queryFromDB(String strSpotName) {
-        TravelDB db = TravelDB.getInstance(SpotDetailActivity.this);
+        TravelDB db = TravelDB.getInstance(SpotDetailScrollActivity.this);
         String strSQL = "select * from Spot where spot_name=\"" + strSpotName + "\"";
         return db.rawQuerySpot(strSQL);
     }
 
-    private class DownloadTask extends AsyncTask<String, Integer, List<String>>{
+    private class DownloadTask extends AsyncTask<String, Integer, List<String>> {
 
         @Override
         protected List<String> doInBackground(String... params) {
@@ -176,7 +202,7 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mProgressDialog = ProgressDialog.show(SpotDetailActivity.this,"Loading...", "数据获取中");
+            mProgressDialog = ProgressDialog.show(SpotDetailScrollActivity.this,"Loading...", "数据获取中");
         }
 
         @Override
@@ -215,7 +241,7 @@ public class SpotDetailActivity extends AppCompatActivity {
                 spot.setStrOpenTime(ticketInfo.getString("open_time"));
                 spot.setStrTicketInfo(ticketInfo.getString("price"));
 
-                saveSpotToDB(SpotDetailActivity.this,spot);
+                saveSpotToDB(SpotDetailScrollActivity.this,spot);
 
                 updateUI(spot);
 
@@ -229,13 +255,8 @@ public class SpotDetailActivity extends AppCompatActivity {
     }
 
     private void updateUI(final Spot spot) {
-        String[] rate = {"★☆☆☆☆","★★☆☆☆","★★★☆☆","★★★★☆","★★★★★"};
 
-        tvSpotName.setText(spot.getStrSpotName());
-        String subTitle = "星级： " + rate[Integer.valueOf(spot.getStrStar())-1];
-        tvSpotRate.setText(subTitle);
-
-        imageLoader.bindBitmap(spot.getStrSpotImgUrl(),mLayout,0,0);
+        imageLoader.bindBitmap(spot.getStrSpotImgUrl(),mImgView);
 
         SpotContentAdapter adapter = new SpotContentAdapter();
         adapter.initList(spot);
@@ -243,7 +264,7 @@ public class SpotDetailActivity extends AppCompatActivity {
         mTile_Book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SpotDetailActivity.this, WebViewActivity.class);
+                Intent i = new Intent(SpotDetailScrollActivity.this, WebViewActivity.class);
                 i.putExtra("URL", spot.getStrBookUrl());
                 startActivity(i);
             }
@@ -252,7 +273,7 @@ public class SpotDetailActivity extends AppCompatActivity {
         mTile_Weather.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(SpotDetailActivity.this, WeatherActivity.class);
+                Intent i = new Intent(SpotDetailScrollActivity.this, WeatherActivity.class);
                 i.putExtra("Name", spot.getStrSpotCity());
                 startActivity(i);
             }
@@ -266,5 +287,6 @@ public class SpotDetailActivity extends AppCompatActivity {
         TravelDB db = TravelDB.getInstance(context);
         db.saveSpot(spot);
     }
+
 
 }

@@ -19,12 +19,7 @@ import java.util.List;
  */
 public class SpotContentAdapter extends RecyclerView.Adapter {
 
-    private SpotDetailActivity spotDetailActivity;
     private List<SpotContent> items = new ArrayList<>();
-
-    public SpotContentAdapter(SpotDetailActivity spotDetailActivity) {
-        this.spotDetailActivity = spotDetailActivity;
-    }
 
     public void initList(Spot spot) {
         if (spot.getStrAbstract() != null)
