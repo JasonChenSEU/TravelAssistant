@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.jason.listviewtest.Helpter.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.SpotDetailActivity;
+import com.jason.listviewtest.activity.SpotDetailScrollActivity;
 import com.jason.listviewtest.adapter.SpotListAdapter;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
 import com.jason.listviewtest.model.SpotBase;
@@ -91,7 +92,7 @@ public class SpotListFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 SpotBase sb = Utils.listSpot.get(position);
                 if(sb != null){
-                    Intent i = new Intent(getContext(),SpotDetailActivity.class);
+                    Intent i = new Intent(getContext(),SpotDetailScrollActivity.class);
                     i.putExtra("SpotPos", position);
                     startActivity(i);
                 }

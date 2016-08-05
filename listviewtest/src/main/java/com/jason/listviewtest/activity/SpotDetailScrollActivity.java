@@ -15,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,30 +53,61 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 
     private String strSpotName;
 
-    private LinearLayout mTile_Book;
-    private LinearLayout mTile_Weather;
-
     private ProgressDialog mProgressDialog;
 
     private ImageLoader imageLoader;
 
     private ImageView mImgView;
 
-    private NestedScrollView view;
+    private String strBookUrl;
+    private String strSpotCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spot_detail_scroll);
+
+        if(!Utils.listSpot.isEmpty())
+            Utils.initSpotList(this);
+
+        mSpotBase = Utils.listSpot.get(getIntent().getIntExtra("SpotPos", 0));
+
+        strSpotName = mSpotBase.getStrSpotName();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("上海");
+        toolbar.setTitle(strSpotName);
 //        toolbar.setSubtitle("Recommend: 5stars");
         setSupportActionBar(toolbar);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.spot_scroll_weather:
+                        if(strSpotCity != null){
+                            Intent i = new Intent(SpotDetailScrollActivity.this, WeatherActivity.class);
+                            i.putExtra("Name", strSpotCity);
+                            startActivity(i);
+                        }
+                        break;
+                    case R.id.spot_scroll_book:
+                        if(strBookUrl != null){
+                            Intent i = new Intent(SpotDetailScrollActivity.this, WebViewActivity.class);
+                            i.putExtra("URL", strBookUrl);
+                            startActivity(i);
+                        }
+                        break;
+                }
+                return true;
+            }
+        });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -85,28 +119,28 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 //            }
 //        });
 
-        Utils.initSpotList(this);
+//        Utils.initSpotList(this);
         initDataAndUI();
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_spot_detail_scroll,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
+    }
+
     private void initDataAndUI() {
-        if(!Utils.listSpot.isEmpty())
-            Utils.initSpotList(this);
-
-        mSpotBase = Utils.listSpot.get(getIntent().getIntExtra("SpotPos", 0));
-
-        strSpotName = mSpotBase.getStrSpotName();
-
-        mTile_Book = (LinearLayout) findViewById(R.id.spot_detail_book_scroll);
-        ((ImageView)mTile_Book.findViewById(R.id.tile_image_view)).
-                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.book));
-        ((TextView)mTile_Book.findViewById(R.id.tile_title)).setText("购 票");
-
-        mTile_Weather = (LinearLayout) findViewById(R.id.spot_detail_weather_scroll);
-        ((ImageView)mTile_Weather.findViewById(R.id.tile_image_view)).
-                setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.weather));
-        ((TextView)mTile_Weather.findViewById(R.id.tile_title)).setText("天 气");
 
         imageLoader = ImageLoader.build(SpotDetailScrollActivity.this);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_spot_content_scroll);
@@ -115,14 +149,6 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
         mImgView = (ImageView) findViewById(R.id.spot_detail_image);
 
         List<Spot> resSpot = queryFromDB(strSpotName);
-
-        view = (NestedScrollView) findViewById(R.id.nested_scroll_view);
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                view.fullScroll(NestedScrollView.FOCUS_UP);
-            }
-        });
 
         if(resSpot.size() == 0) {
             //Cannot find info from db,download it from internet.
@@ -261,23 +287,9 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
         SpotContentAdapter adapter = new SpotContentAdapter();
         adapter.initList(spot);
 
-        mTile_Book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(SpotDetailScrollActivity.this, WebViewActivity.class);
-                i.putExtra("URL", spot.getStrBookUrl());
-                startActivity(i);
-            }
-        });
+        strBookUrl = spot.getStrBookUrl();
+        strSpotCity = spot.getStrSpotCity();
 
-        mTile_Weather.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(SpotDetailScrollActivity.this, WeatherActivity.class);
-                i.putExtra("Name", spot.getStrSpotCity());
-                startActivity(i);
-            }
-        });
 
         mRecyclerView.setAdapter(adapter);
 

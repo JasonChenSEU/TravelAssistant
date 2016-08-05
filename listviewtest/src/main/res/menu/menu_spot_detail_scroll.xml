@@ -3,8 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jason.listviewtest.activity.SpotDetailScrollActivity">
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
+        android:id="@+id/spot_scroll_weather"
+        android:title="Weather"
+        android:icon="@mipmap/ic_weather"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/spot_scroll_book"
+        android:title="Book"
+        android:icon="@mipmap/ic_book1"
+        app:showAsAction="ifRoom" />
+
 </menu>
