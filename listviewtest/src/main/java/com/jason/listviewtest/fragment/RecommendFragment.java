@@ -15,6 +15,7 @@ import com.jason.listviewtest.Helpter.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.CityDetailActivity;
 import com.jason.listviewtest.activity.SpotDetailActivity;
+import com.jason.listviewtest.activity.SpotDetailScrollActivity;
 import com.jason.listviewtest.imageloader.ImageLoader;
 import com.jason.listviewtest.model.City;
 import com.jason.listviewtest.model.SpotBase;
@@ -120,6 +121,7 @@ public class RecommendFragment extends Fragment {
 
         String[] strsStyle = {"自然景观", "文化古迹", "公园/主题公园", "古镇/特色街区","其他"};
         String strDes = null;
+        int roundRadis = 160;
 
         switch(type){
             case 0:
@@ -128,13 +130,19 @@ public class RecommendFragment extends Fragment {
                 strDes = sb1.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb1.getStrSpotStyle()) - 1 ];
                 ((TextView)layout.findViewById(R.id.main_page_list_title)).setText(sb1.getStrSpotName());
                 ((TextView)layout.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb1.getStrSpotImgUrl(), (ImageView)layout.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb1.getStrSpotImgUrl(), (ImageView)layout.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
                 layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(getActivity(),SpotDetailActivity.class);
-                        i.putExtra("SpotPos", Utils.listSpot.indexOf(sb1));
-                        startActivity(i);
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb1));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb1));
+                            startActivity(i);
+                        }
                     }
                 });
 
@@ -143,14 +151,14 @@ public class RecommendFragment extends Fragment {
                 strDes = sb2.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb2.getStrSpotStyle()) - 1 ];
                 ((TextView)layout2.findViewById(R.id.main_page_list_title)).setText(sb2.getStrSpotName());
                 ((TextView)layout2.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb2.getStrSpotImgUrl(), (ImageView)layout2.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb2.getStrSpotImgUrl(), (ImageView)layout2.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
                 LinearLayout layout3 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
                 SpotBase sb3 = Utils.findSpot(mHotSpots[2]);
                 strDes = sb3.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb3.getStrSpotStyle()) - 1 ];
                 ((TextView)layout3.findViewById(R.id.main_page_list_title)).setText(sb3.getStrSpotName());
                 ((TextView)layout3.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb3.getStrSpotImgUrl(), (ImageView)layout3.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb3.getStrSpotImgUrl(), (ImageView)layout3.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
                 break;
             case 1:
                 LinearLayout layout4 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_1);
@@ -158,7 +166,7 @@ public class RecommendFragment extends Fragment {
                 strDes = c1.getStrCitySimpleDes();
                 ((TextView)layout4.findViewById(R.id.main_page_list_title)).setText(c1.getStrCityName());
                 ((TextView)layout4.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(c1.getStrURL(), (ImageView)layout4.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(c1.getStrURL(), (ImageView)layout4.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
                 layout4.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -173,14 +181,14 @@ public class RecommendFragment extends Fragment {
                 strDes = c2.getStrCitySimpleDes();
                 ((TextView)layout5.findViewById(R.id.main_page_list_title)).setText(c2.getStrCityName());
                 ((TextView)layout5.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(c2.getStrURL(), (ImageView)layout5.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(c2.getStrURL(), (ImageView)layout5.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
                 LinearLayout layout6 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
                 City c3 = Utils.findCity(mAound[2]);
                 strDes = c3.getStrCitySimpleDes();
                 ((TextView)layout6.findViewById(R.id.main_page_list_title)).setText(c3.getStrCityName());
                 ((TextView)layout6.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(c3.getStrURL(), (ImageView)layout6.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(c3.getStrURL(), (ImageView)layout6.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
                 break;
             case 2:
@@ -189,7 +197,7 @@ public class RecommendFragment extends Fragment {
                 strDes = sb4.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb4.getStrSpotStyle()) - 1 ];
                 ((TextView)layout7.findViewById(R.id.main_page_list_title)).setText(sb4.getStrSpotName());
                 ((TextView)layout7.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb4.getStrSpotImgUrl(), (ImageView)layout7.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb4.getStrSpotImgUrl(), (ImageView)layout7.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
 
                 LinearLayout layout8 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_2);
@@ -197,14 +205,14 @@ public class RecommendFragment extends Fragment {
                 strDes = sb5.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb5.getStrSpotStyle()) - 1 ];
                 ((TextView)layout8.findViewById(R.id.main_page_list_title)).setText(sb5.getStrSpotName());
                 ((TextView)layout8.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb5.getStrSpotImgUrl(), (ImageView)layout8.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb5.getStrSpotImgUrl(), (ImageView)layout8.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
                 LinearLayout layout9 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
                 SpotBase sb6 = Utils.findSpot(mRMBSpot[2]);
                 strDes = sb6.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb6.getStrSpotStyle()) - 1 ];
                 ((TextView)layout9.findViewById(R.id.main_page_list_title)).setText(sb6.getStrSpotName());
                 ((TextView)layout9.findViewById(R.id.main_page_list_title_des)).setText(strDes);
-                mImageLoader.bindBitmap(sb6.getStrSpotImgUrl(), (ImageView)layout9.findViewById(R.id.main_page_list_image),true);
+                mImageLoader.bindBitmap(sb6.getStrSpotImgUrl(), (ImageView)layout9.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,true);
 
                 break;
         }

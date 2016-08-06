@@ -34,6 +34,8 @@ public class Utils {
 
     public static List<SpotBase> listSpot = new ArrayList<>();
 
+    public static boolean isSpotStyleCollpase = false;
+
 
     /**
      * Provide index of Province

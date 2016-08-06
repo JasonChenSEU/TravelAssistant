@@ -282,7 +282,7 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 
     private void updateUI(final Spot spot) {
 
-        imageLoader.bindBitmap(spot.getStrSpotImgUrl(),mImgView);
+        imageLoader.bindBitmap(spot.getStrSpotImgUrl(),mImgView, getWindowManager().getDefaultDisplay().getWidth(), 240,false);
 
         SpotContentAdapter adapter = new SpotContentAdapter();
         adapter.initList(spot);
