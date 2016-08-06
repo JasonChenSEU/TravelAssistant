@@ -68,6 +68,36 @@
         <View
             style="@style/h_line" />
 
+        <View
+            style="@style/h_line"
+            android:layout_marginTop="20dip"/>
+
+        <RelativeLayout
+            android:id="@+id/setting_spot_detail_style"
+            style="@style/setting_item_layout" >
+
+            <TextView
+                android:id="@+id/tv_spot_detail_style_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="4dp"
+                android:gravity="center_vertical"
+                android:text="景点详细页面模式"
+                android:textColor="@color/primaryText"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.AppCompatSpinner
+                android:id="@+id/spinner"
+                android:layout_below="@id/tv_spot_detail_style_title"
+                android:layout_marginTop="6dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.AppCompatSpinner>
+
+        </RelativeLayout>
+
+        <View
+            style="@style/h_line" />
 
         <View
             style="@style/h_line"
@@ -87,6 +117,10 @@
                 android:textSize="16sp" />
 
         </RelativeLayout>
+
+        <View
+            style="@style/h_line" />
+
 
         <View
             style="@style/h_line" />
