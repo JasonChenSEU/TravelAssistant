@@ -30,7 +30,7 @@ public class MainPageActivity extends AppCompatActivity
 
     private static final String TAG = "MainPageActivity";
 
-    private ImageView mImageView;
+//    private ImageView mImageView;
 
     private int mCurrentFragment = 0;
 
@@ -60,9 +60,9 @@ public class MainPageActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_recommend);
 
-        mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_img);
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.my_image);
-        mImageView.setImageBitmap(Utils.toRoundBitmap(bitmap));
+//        mImageView = (ImageView) navigationView.getHeaderView(0).findViewById(R.id.nav_header_img);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.my_image);
+//        mImageView.setImageBitmap(Utils.toRoundBitmap(bitmap));
 
         initData();
 

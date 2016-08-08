@@ -90,7 +90,7 @@ public class CityListFragment extends Fragment {
         imageLoader = ImageLoader.build(getContext());
 
         //set default bitmap in the list
-        defaultRoundBitmap = Utils.toRoundBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.image_default));
+        defaultRoundBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image_default);
 
         initRecyclerView();
         
@@ -201,7 +201,7 @@ public class CityListFragment extends Fragment {
             //Set tag
             imageView.setTag(strURL);
             //Load image from cache or download async.
-            imageLoader.bindBitmap(strURL, imageView, true);
+            imageLoader.bindBitmap(strURL, imageView, false);
 
             listItemView.getTextViewName().setText(getItem(position).getStrCityName());
             listItemView.getTextViewDes().setText(getItem(position).getStrCitySimpleDes());

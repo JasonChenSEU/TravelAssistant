@@ -27,4 +27,5 @@ dependencies {
     compile 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
     compile 'com.android.support:design:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
+    compile 'com.pkmmte.view:circularimageview:1.1'
 }
