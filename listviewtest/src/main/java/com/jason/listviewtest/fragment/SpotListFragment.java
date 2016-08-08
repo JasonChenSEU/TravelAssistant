@@ -2,7 +2,9 @@ package com.jason.listviewtest.fragment;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 import com.jason.listviewtest.Helpter.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.SpotDetailActivity;
+import com.jason.listviewtest.activity.SpotDetailScrollActivity;
 import com.jason.listviewtest.adapter.SpotListAdapter;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
 import com.jason.listviewtest.model.SpotBase;
@@ -36,6 +39,7 @@ public class SpotListFragment extends Fragment {
 
     private View mFragView;
     private RecyclerView mRecyclerView;
+
 
     public SpotListFragment() {
         // Required empty public constructor
@@ -91,9 +95,15 @@ public class SpotListFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 SpotBase sb = Utils.listSpot.get(position);
                 if(sb != null){
-                    Intent i = new Intent(getContext(),SpotDetailActivity.class);
-                    i.putExtra("SpotPos", position);
-                    startActivity(i);
+                    if(Utils.isSpotStyleCollpase) {
+                        Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                        i.putExtra("SpotPos", position);
+                        startActivity(i);
+                    }else{
+                        Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                        i.putExtra("SpotPos", position);
+                        startActivity(i);
+                    }
                 }
             }
         });

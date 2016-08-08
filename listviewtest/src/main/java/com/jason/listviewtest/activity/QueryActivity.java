@@ -76,9 +76,15 @@ public class QueryActivity extends AppCompatActivity {
                         startActivity(i);
                         break;
                     case 1:
-                        Intent i2 = new Intent(QueryActivity.this,SpotDetailActivity.class);
-                        i2.putExtra("SpotPos", it.pos);
-                        startActivity(i2);
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i2 = new Intent(QueryActivity.this, SpotDetailScrollActivity.class);
+                            i2.putExtra("SpotPos", it.pos);
+                            startActivity(i2);
+                        }else {
+                            Intent i2 = new Intent(QueryActivity.this, SpotDetailActivity.class);
+                            i2.putExtra("SpotPos", it.pos);
+                            startActivity(i2);
+                        }
                         break;
                 }
             }

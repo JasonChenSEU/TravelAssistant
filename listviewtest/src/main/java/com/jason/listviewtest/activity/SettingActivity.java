@@ -2,14 +2,23 @@ package com.jason.listviewtest.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.jason.listviewtest.Helpter.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.imageloader.ImageLoader;
 
@@ -32,6 +41,35 @@ public class SettingActivity extends AppCompatActivity implements View.OnClickLi
 
         initView();
         initCacheData();
+
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        final SharedPreferences.Editor editor = sp.edit();
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        final String[] s = {"Normal", "CollapsingToolbarLayout"};
+        ArrayAdapter adapter = new ArrayAdapter(this,android.R.layout.simple_spinner_item,s);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setSelection(Utils.isSpotStyleCollpase ? 1 : 0);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                editor.putBoolean("isCollapsingToolbar", position == 1);
+                editor.commit();
+                Utils.isSpotStyleCollpase = position == 1;
+//                Toast.makeText(SettingActivity.this, "Style set: " + s[position], Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
     }
 
     private void initCacheData() {

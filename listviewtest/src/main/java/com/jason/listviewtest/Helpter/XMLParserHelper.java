@@ -94,11 +94,11 @@ public class XMLParserHelper {
 
             while (eventType != XmlResourceParser.END_DOCUMENT) {
                 String strNodeName = parser.getName();
-                if (eventType == XmlResourceParser.START_TAG && "SpotData2".equals(strNodeName)) {
+                if (eventType == XmlResourceParser.START_TAG && "SpotData".equals(strNodeName)) {
 
                     Spot spot = new Spot();
 
-                    while (!(eventType == XmlResourceParser.END_TAG && parser.getName().equals("SpotData2"))) {
+                    while (!(eventType == XmlResourceParser.END_TAG && parser.getName().equals("SpotData"))) {
                         eventType = parser.next();
                         switch (eventType){
                             case XmlResourceParser.START_TAG:
