@@ -116,7 +116,7 @@ public class MainPageActivity extends AppCompatActivity
                         .addToBackStack(null)
                         .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                         .replace(R.id.default_main_content, fragment).commit();
-                mtoolbar.setTitle("City List");
+//                mtoolbar.setTitle("City List");
             }
             mCurrentFragment = 1;
         } else if (id == R.id.nav_spot_list) {
@@ -127,7 +127,7 @@ public class MainPageActivity extends AppCompatActivity
                         .addToBackStack(null)
                         .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                         .replace(R.id.default_main_content, fragment).commit();
-                mtoolbar.setTitle("Spot List");
+//                mtoolbar.setTitle("Spot List");
             }
             mCurrentFragment = 2;
         } else if (id == R.id.nav_recommend) {
@@ -138,7 +138,7 @@ public class MainPageActivity extends AppCompatActivity
                         .addToBackStack(null)
                         .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
                         .replace(R.id.default_main_content,fragment).commit();
-                mtoolbar.setTitle("Recommend");
+//                mtoolbar.setTitle("Recommend");
             }
             mCurrentFragment = 0;
         } else if (id == R.id.nav_query) {

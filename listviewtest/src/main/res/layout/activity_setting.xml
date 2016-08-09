@@ -121,10 +121,6 @@
         <View
             style="@style/h_line" />
 
-
-        <View
-            style="@style/h_line" />
-
     </LinearLayout>
 
 </ScrollView>
