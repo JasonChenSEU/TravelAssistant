@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -34,12 +35,16 @@ public class MainPageActivity extends AppCompatActivity
 
     private int mCurrentFragment = 0;
 
+    private Toolbar mtoolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_page);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mtoolbar = (Toolbar) findViewById(R.id.toolbar_main);
+        mtoolbar.setTitle("Travel Assistant");
+        setSupportActionBar(mtoolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +57,7 @@ public class MainPageActivity extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, mtoolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
@@ -107,21 +112,33 @@ public class MainPageActivity extends AppCompatActivity
             if(mCurrentFragment != 1) {
                 CityListFragment fragment = CityListFragment.newInstance("a", "b");
                 FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.default_main_content, fragment).commit();
+                manager.beginTransaction()
+                        .addToBackStack(null)
+                        .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                        .replace(R.id.default_main_content, fragment).commit();
+                mtoolbar.setTitle("City List");
             }
             mCurrentFragment = 1;
         } else if (id == R.id.nav_spot_list) {
             if(mCurrentFragment != 2) {
                 SpotListFragment fragment = SpotListFragment.newInstance("a", "b");
                 FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.default_main_content, fragment).commit();
+                manager.beginTransaction()
+                        .addToBackStack(null)
+                        .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                        .replace(R.id.default_main_content, fragment).commit();
+                mtoolbar.setTitle("Spot List");
             }
             mCurrentFragment = 2;
         } else if (id == R.id.nav_recommend) {
             if(mCurrentFragment != 0){
                 RecommendFragment fragment = RecommendFragment.newInstance("a","b");
                 FragmentManager manager = getSupportFragmentManager();
-                manager.beginTransaction().replace(R.id.default_main_content,fragment).commit();
+                manager.beginTransaction()
+                        .addToBackStack(null)
+                        .setCustomAnimations(android.R.anim.fade_in,android.R.anim.fade_out)
+                        .replace(R.id.default_main_content,fragment).commit();
+                mtoolbar.setTitle("Recommend");
             }
             mCurrentFragment = 0;
         } else if (id == R.id.nav_query) {

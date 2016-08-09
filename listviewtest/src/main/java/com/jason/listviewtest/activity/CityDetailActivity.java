@@ -2,13 +2,19 @@ package com.jason.listviewtest.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +57,17 @@ public class CityDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_city_detail);
 
+        Intent i = getIntent();
+
+        City city = Utils.listCity.get(i.getIntExtra("CityPos",0));
+
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(city.getStrCityName());
+        }
+
         mViewPager = (ViewPager) findViewById(R.id.city_detail_pager);
 
         //Parse xml for city data
@@ -59,9 +76,6 @@ public class CityDetailActivity extends AppCompatActivity {
         //instance of imageLoader
         imageLoader = ImageLoader.build(CityDetailActivity.this);
 
-        Intent i = getIntent();
-
-        City city = Utils.listCity.get(i.getIntExtra("CityPos",0));
 
         //Prepare three views for viewpager
         View view1 = getLayoutInflater().inflate(R.layout.city_detail_view_des,null);
@@ -123,6 +137,16 @@ public class CityDetailActivity extends AppCompatActivity {
         };
 
         mViewPager.setAdapter(pa);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private void initAndSetOtherTextViews(final City city) {

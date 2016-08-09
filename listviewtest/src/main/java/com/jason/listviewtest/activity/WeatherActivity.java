@@ -8,10 +8,12 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.preference.PreferenceGroup;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Xml;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -73,7 +75,16 @@ public class WeatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_weather);
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Weather");
+        }
+
         initViews();
+
+
 
         strCurrentHandle = getIntent().getStringExtra("Name");
 
@@ -83,6 +94,16 @@ public class WeatherActivity extends AppCompatActivity {
             strCurrentHandle = "北京";
             handleData("北京");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private void handleData(String strCurrentCity) {

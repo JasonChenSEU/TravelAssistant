@@ -6,11 +6,14 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,6 +75,13 @@ public class SpotDetailActivity extends AppCompatActivity {
 
         strSpotName = mSpotBase.getStrSpotName();
 
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(strSpotName);
+        }
+
 //        String jsonResult = request(strTicketUrl, strTicketArgs);
 
         tvSpotName = (TextView) findViewById(R.id.spot_detail_name);
@@ -109,6 +119,16 @@ public class SpotDetailActivity extends AppCompatActivity {
             updateUI(resSpot.get(0));
         }
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return true;
     }
 
     private List<Spot> queryFromDB(String strSpotName) {
