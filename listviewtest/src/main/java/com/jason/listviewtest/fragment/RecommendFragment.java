@@ -148,18 +148,46 @@ public class RecommendFragment extends Fragment {
                 });
 
                 LinearLayout layout2 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_2);
-                SpotBase sb2 = Utils.findSpot(mHotSpots[1]);
+                final SpotBase sb2 = Utils.findSpot(mHotSpots[1]);
                 strDes = sb2.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb2.getStrSpotStyle()) - 1 ];
                 ((TextView)layout2.findViewById(R.id.main_page_list_title)).setText(sb2.getStrSpotName());
                 ((TextView)layout2.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(sb2.getStrSpotImgUrl(), (ImageView)layout2.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
+                layout2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb2));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb2));
+                            startActivity(i);
+                        }
+                    }
+                });
 
                 LinearLayout layout3 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
-                SpotBase sb3 = Utils.findSpot(mHotSpots[2]);
+                final SpotBase sb3 = Utils.findSpot(mHotSpots[2]);
                 strDes = sb3.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb3.getStrSpotStyle()) - 1 ];
                 ((TextView)layout3.findViewById(R.id.main_page_list_title)).setText(sb3.getStrSpotName());
                 ((TextView)layout3.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(sb3.getStrSpotImgUrl(), (ImageView)layout3.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
+                layout3.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb3));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb3));
+                            startActivity(i);
+                        }
+                    }
+                });
                 break;
             case 1:
                 LinearLayout layout4 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_1);
@@ -178,42 +206,98 @@ public class RecommendFragment extends Fragment {
                 });
 
                 LinearLayout layout5 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_2);
-                City c2 = Utils.findCity(mAound[1]);
+                final City c2 = Utils.findCity(mAound[1]);
                 strDes = c2.getStrCitySimpleDes();
                 ((TextView)layout5.findViewById(R.id.main_page_list_title)).setText(c2.getStrCityName());
                 ((TextView)layout5.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(c2.getStrURL(), (ImageView)layout5.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
+                layout5.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getContext(),CityDetailActivity.class);
+                        i.putExtra("CityPos",Utils.listCity.indexOf(c2));
+                        startActivity(i);
+                    }
+                });
 
                 LinearLayout layout6 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
-                City c3 = Utils.findCity(mAound[2]);
+                final City c3 = Utils.findCity(mAound[2]);
                 strDes = c3.getStrCitySimpleDes();
                 ((TextView)layout6.findViewById(R.id.main_page_list_title)).setText(c3.getStrCityName());
                 ((TextView)layout6.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(c3.getStrURL(), (ImageView)layout6.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
-
+                layout6.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(getContext(),CityDetailActivity.class);
+                        i.putExtra("CityPos",Utils.listCity.indexOf(c3));
+                        startActivity(i);
+                    }
+                });
                 break;
             case 2:
                 LinearLayout layout7 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_1);
-                SpotBase sb4 = Utils.findSpot(mRMBSpot[0]);
+                final SpotBase sb4 = Utils.findSpot(mRMBSpot[0]);
                 strDes = sb4.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb4.getStrSpotStyle()) - 1 ];
                 ((TextView)layout7.findViewById(R.id.main_page_list_title)).setText(sb4.getStrSpotName());
                 ((TextView)layout7.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(sb4.getStrSpotImgUrl(), (ImageView)layout7.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
-
+                layout7.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb4));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb4));
+                            startActivity(i);
+                        }
+                    }
+                });
 
                 LinearLayout layout8 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_2);
-                SpotBase sb5 = Utils.findSpot(mRMBSpot[1]);
+                final SpotBase sb5 = Utils.findSpot(mRMBSpot[1]);
                 strDes = sb5.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb5.getStrSpotStyle()) - 1 ];
                 ((TextView)layout8.findViewById(R.id.main_page_list_title)).setText(sb5.getStrSpotName());
                 ((TextView)layout8.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(sb5.getStrSpotImgUrl(), (ImageView)layout8.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
+                layout8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb5));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb5));
+                            startActivity(i);
+                        }
+                    }
+                });
 
                 LinearLayout layout9 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
-                SpotBase sb6 = Utils.findSpot(mRMBSpot[2]);
+                final SpotBase sb6 = Utils.findSpot(mRMBSpot[2]);
                 strDes = sb6.getStrSpotProvince() + "  |  " + strsStyle[Integer.valueOf(sb6.getStrSpotStyle()) - 1 ];
                 ((TextView)layout9.findViewById(R.id.main_page_list_title)).setText(sb6.getStrSpotName());
                 ((TextView)layout9.findViewById(R.id.main_page_list_title_des)).setText(strDes);
                 mImageLoader.bindBitmap(sb6.getStrSpotImgUrl(), (ImageView)layout9.findViewById(R.id.main_page_list_image),roundRadis,roundRadis,false);
+                layout9.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if(Utils.isSpotStyleCollpase){
+                            Intent i = new Intent(getContext(), SpotDetailScrollActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb6));
+                            startActivity(i);
+                        }else {
+                            Intent i = new Intent(getContext(), SpotDetailActivity.class);
+                            i.putExtra("SpotPos", Utils.listSpot.indexOf(sb6));
+                            startActivity(i);
+                        }
+                    }
+                });
 
                 break;
         }
