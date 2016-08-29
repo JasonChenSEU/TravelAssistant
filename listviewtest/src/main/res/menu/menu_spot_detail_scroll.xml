@@ -5,13 +5,13 @@
     <item
         android:id="@+id/spot_scroll_weather"
         android:title="Weather"
-        android:icon="@mipmap/ic_weather"
+        android:icon="@mipmap/ic_weather_trans"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/spot_scroll_book"
         android:title="Book"
-        android:icon="@mipmap/ic_book1"
+        android:icon="@mipmap/ic_book1_trans"
         app:showAsAction="ifRoom" />
 
 </menu>

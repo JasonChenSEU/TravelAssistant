@@ -14,4 +14,8 @@ public class APIHelper {
 
     public static final String BAIDU_WEATHER_QUERY_URL_FORMAT = "http://api.map.baidu.com/telematics/v3/weather?location=%s&ak=%s";
 
+    public static final String QUNAER_BASE_URL = "http://apis.baidu.com/apistore/qunaerticket/";
+
+    public static final String BAIDU_BASE_URL = "http://api.map.baidu.com/telematics/v3/";
+
 }

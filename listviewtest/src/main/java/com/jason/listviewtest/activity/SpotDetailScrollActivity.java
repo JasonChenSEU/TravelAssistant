@@ -3,26 +3,17 @@ package com.jason.listviewtest.activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.UriPermission;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.jason.listviewtest.Helpter.APIHelper;
 import com.jason.listviewtest.Helpter.Utils;
@@ -30,8 +21,12 @@ import com.jason.listviewtest.R;
 import com.jason.listviewtest.adapter.SpotContentAdapter;
 import com.jason.listviewtest.db.TravelDB;
 import com.jason.listviewtest.imageloader.ImageLoader;
+import com.jason.listviewtest.model.GetSpotDetailInfo;
+import com.jason.listviewtest.model.GetSpotTicketInfo;
 import com.jason.listviewtest.model.Spot;
 import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.SpotDetailInfoFromBAIDU;
+import com.jason.listviewtest.model.SpotTicketInfoFromQUNAER;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +39,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action0;
+import rx.schedulers.Schedulers;
 
 public class SpotDetailScrollActivity extends AppCompatActivity {
 
@@ -151,17 +155,88 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
         List<Spot> resSpot = queryFromDB(strSpotName);
 
         if(resSpot.size() == 0) {
-            //Cannot find info from db,download it from internet.
-            String strSpotDetailArgs = "id=" + mSpotBase.getStrSpotNameEn() + "&ak=" + APIHelper.BAIDU_KEY + "&output=json";
-            String strSpotDetailUrl = APIHelper.BAIDU_SOPT_QUERY_URL + "?" + strSpotDetailArgs;
-
-            String strTicketArgs = "id=" + mSpotBase.getStrQueryID();
-            String strTicketUrl = APIHelper.QUNAER_TICKET_URL + "?" + strTicketArgs;
-            new DownloadTask().execute(strTicketUrl, strSpotDetailUrl);
+//            getDataFromNetwork(strTicketUrl,strSpotDetailUrl);
+            getDataFromNetworkWithRxJavaAndRetrofit();
         }else{
             updateUI(resSpot.get(0));
         }
     }
+
+    private void getDataFromNetworkWithRxJavaAndRetrofit() {
+
+        mProgressDialog = ProgressDialog.show(SpotDetailScrollActivity.this,"Loading...", "数据获取中");
+
+        Retrofit retrofit_qunaer_ticket = new Retrofit.Builder()
+                .baseUrl(APIHelper.QUNAER_BASE_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        GetSpotTicketInfo getData = retrofit_qunaer_ticket.create(GetSpotTicketInfo.class);
+
+        Observable<SpotTicketInfoFromQUNAER> spotFromNetworkObservable = getData.dataByRxJava(APIHelper.QUNAER_KEY,mSpotBase.getStrQueryID());
+
+        Retrofit retrofit_baidu = new Retrofit.Builder()
+                .baseUrl(APIHelper.BAIDU_BASE_URL)
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        GetSpotDetailInfo getSpotDetailInfo = retrofit_baidu.create(GetSpotDetailInfo.class);
+
+        Observable<SpotDetailInfoFromBAIDU> spotDetailFromBaiduObservable = getSpotDetailInfo.dataByRxJava_Detail(mSpotBase.getStrSpotNameEn(),APIHelper.BAIDU_KEY,"json");
+
+        final Spot spot = new Spot(mSpotBase);
+        Observable
+                .merge(spotFromNetworkObservable, spotDetailFromBaiduObservable)
+                .doOnSubscribe(new Action0() {
+                    @Override
+                    public void call() {
+                        mProgressDialog.show();
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Object>() {
+                    @Override
+                    public void onCompleted() {
+                        updateUI(spot);
+//                        saveSpotToDB(SpotDetailScrollActivity.this,spot);
+                        mProgressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mProgressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onNext(Object o) {
+                        if(o instanceof SpotTicketInfoFromQUNAER){
+                            if("success".equals(((SpotTicketInfoFromQUNAER) o).getErrMsg())){
+                                spot.buildWithTicketInfo((SpotTicketInfoFromQUNAER) o);
+                            }
+                        }
+                        else if(o instanceof SpotDetailInfoFromBAIDU){
+                            if("Success".equals(((SpotDetailInfoFromBAIDU) o).getStatus())){
+                                spot.buildWithDetailInfo((SpotDetailInfoFromBAIDU) o);
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    private void getDataFromNetwork() {
+        //Cannot find info from db,download it from internet.
+        String strSpotDetailArgs = "id=" + mSpotBase.getStrSpotNameEn() + "&ak=" + APIHelper.BAIDU_KEY + "&output=json";
+        String strSpotDetailUrl = APIHelper.BAIDU_SOPT_QUERY_URL + "?" + strSpotDetailArgs;
+
+        String strTicketArgs = "id=" + mSpotBase.getStrQueryID();
+        String strTicketUrl = APIHelper.QUNAER_TICKET_URL + "?" + strTicketArgs;
+        new DownloadTask().execute(strTicketUrl, strSpotDetailUrl);
+    }
+
+
 
     private List<Spot> queryFromDB(String strSpotName) {
         TravelDB db = TravelDB.getInstance(SpotDetailScrollActivity.this);
