@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -39,6 +40,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadFactory;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -47,6 +49,8 @@ import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action0;
+import rx.functions.Action1;
+import rx.functions.Func2;
 import rx.schedulers.Schedulers;
 
 public class SpotDetailScrollActivity extends AppCompatActivity {
@@ -166,6 +170,7 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 
         mProgressDialog = ProgressDialog.show(SpotDetailScrollActivity.this,"Loading...", "数据获取中");
 
+        //Retrofit for QUNAER ticket info
         Retrofit retrofit_qunaer_ticket = new Retrofit.Builder()
                 .baseUrl(APIHelper.QUNAER_BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -176,6 +181,7 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 
         Observable<SpotTicketInfoFromQUNAER> spotFromNetworkObservable = getData.dataByRxJava(APIHelper.QUNAER_KEY,mSpotBase.getStrQueryID());
 
+        //Retrofit for Baidu detail info
         Retrofit retrofit_baidu = new Retrofit.Builder()
                 .baseUrl(APIHelper.BAIDU_BASE_URL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
@@ -185,22 +191,37 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
 
         Observable<SpotDetailInfoFromBAIDU> spotDetailFromBaiduObservable = getSpotDetailInfo.dataByRxJava_Detail(mSpotBase.getStrSpotNameEn(),APIHelper.BAIDU_KEY,"json");
 
-        final Spot spot = new Spot(mSpotBase);
+        //RxJava
         Observable
-                .merge(spotFromNetworkObservable, spotDetailFromBaiduObservable)
+                .zip(spotFromNetworkObservable, spotDetailFromBaiduObservable, new Func2<SpotTicketInfoFromQUNAER, SpotDetailInfoFromBAIDU, Spot>() {
+                    @Override
+                    public Spot call(SpotTicketInfoFromQUNAER spotTicketInfoFromQUNAER, SpotDetailInfoFromBAIDU spotDetailInfoFromBAIDU) {
+//                        Log.e("Record", "ZIP in " + Thread.currentThread());
+                        Spot spot = new Spot(mSpotBase);
+                        spot.buildWithTicketInfo(spotTicketInfoFromQUNAER);
+                        spot.buildWithDetailInfo(spotDetailInfoFromBAIDU);
+                        return spot;
+                    }
+                })
+                .subscribeOn(Schedulers.io())
                 .doOnSubscribe(new Action0() {
                     @Override
                     public void call() {
                         mProgressDialog.show();
                     }
                 })
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .doOnNext(new Action1<Spot>() {
+                    @Override
+                    public void call(Spot spot) {
+                        Log.e("Record", "Save to db in " + Thread.currentThread());
+//                        saveSpotToDB(SpotDetailScrollActivity.this, spot);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Object>() {
+                .subscribe(new Observer<Spot>() {
                     @Override
                     public void onCompleted() {
-                        updateUI(spot);
-//                        saveSpotToDB(SpotDetailScrollActivity.this,spot);
                         mProgressDialog.dismiss();
                     }
 
@@ -210,17 +231,9 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNext(Object o) {
-                        if(o instanceof SpotTicketInfoFromQUNAER){
-                            if("success".equals(((SpotTicketInfoFromQUNAER) o).getErrMsg())){
-                                spot.buildWithTicketInfo((SpotTicketInfoFromQUNAER) o);
-                            }
-                        }
-                        else if(o instanceof SpotDetailInfoFromBAIDU){
-                            if("Success".equals(((SpotDetailInfoFromBAIDU) o).getStatus())){
-                                spot.buildWithDetailInfo((SpotDetailInfoFromBAIDU) o);
-                            }
-                        }
+                    public void onNext(Spot spot) {
+                        updateUI(spot);
+                        Log.e("Record", "update UI in " + Thread.currentThread());
                     }
                 });
     }

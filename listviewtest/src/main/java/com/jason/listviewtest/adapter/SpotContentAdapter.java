@@ -26,7 +26,7 @@ public class SpotContentAdapter extends RecyclerView.Adapter {
             items.add(new SpotContent("印 象", "    " + spot.getStrAbstract()));
         if (spot.getStrAddress() != null)
             items.add(new SpotContent("地 址", "    " + spot.getStrAddress()));
-        if (spot.getStrTel() != null)
+        if (spot.getStrTel() != null && !spot.getStrTel().isEmpty())
             items.add(new SpotContent("电 话", "    " + spot.getStrTel()));
         if (spot.getStrSpotSeasonRecmd() != null) {
             String content = "    " + spot.getStrSpotSeasonRecmd().replaceAll("@", "\n    ");
