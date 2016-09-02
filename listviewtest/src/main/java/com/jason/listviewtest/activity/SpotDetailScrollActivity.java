@@ -2,19 +2,24 @@ package com.jason.listviewtest.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.jason.listviewtest.Helpter.APIHelper;
 import com.jason.listviewtest.Helpter.Utils;
@@ -70,6 +75,8 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
     private String strBookUrl;
     private String strSpotCity;
 
+    public volatile boolean isCanceled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +88,8 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
         mSpotBase = Utils.listSpot.get(getIntent().getIntExtra("SpotPos", 0));
 
         strSpotName = mSpotBase.getStrSpotName();
+
+        isCanceled = false;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(strSpotName);
@@ -169,6 +178,17 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
     private void getDataFromNetworkWithRxJavaAndRetrofit() {
 
         mProgressDialog = ProgressDialog.show(SpotDetailScrollActivity.this,"Loading...", "数据获取中");
+        mProgressDialog.setCancelable(true);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_BACK){
+                    isCanceled = true;
+                }
+                return false;
+            }
+        });
 
         //Retrofit for QUNAER ticket info
         Retrofit retrofit_qunaer_ticket = new Retrofit.Builder()
@@ -208,6 +228,7 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
                     @Override
                     public void call() {
                         mProgressDialog.show();
+                        isCanceled = false;
                     }
                 })
                 .observeOn(Schedulers.io())
@@ -228,11 +249,20 @@ public class SpotDetailScrollActivity extends AppCompatActivity {
                     @Override
                     public void onError(Throwable e) {
                         mProgressDialog.dismiss();
+                        Snackbar.make(mRecyclerView,e.getMessage(),Snackbar.LENGTH_SHORT)
+                                .setAction("Retry", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                }).show();
+//                        Toast.makeText(SpotDetailScrollActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNext(Spot spot) {
-                        updateUI(spot);
+                        if(!isCanceled)
+                            updateUI(spot);
                         Log.e("Record", "update UI in " + Thread.currentThread());
                     }
                 });

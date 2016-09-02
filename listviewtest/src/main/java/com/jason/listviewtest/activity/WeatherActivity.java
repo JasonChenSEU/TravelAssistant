@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.jason.listviewtest.Helpter.APIHelper;
 import com.jason.listviewtest.R;
+import com.jason.listviewtest.model.WeatherFutureView;
 import com.jason.listviewtest.model.WeatherInfo;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -34,37 +35,35 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class WeatherActivity extends AppCompatActivity {
 
+    @BindView(R.id.weather_currentCity)
     TextView tvCurrentCity;
+    @BindView(R.id.weather_currentDate)
     TextView tvDate;
+    @BindView(R.id.weather_currentWeather)
     TextView tvCurWeather;
+    @BindView(R.id.weather_currentWind)
     TextView tvCurWind;
+    @BindView(R.id.weather_temperature)
     TextView tvCurtemp;
+    @BindView(R.id.weather_pm25)
     TextView tvCurPM;
-
+    @BindView(R.id.weather_updateTime)
     TextView tvUpdateTime;
 
+    @BindView(R.id.weather_pictureUrl)
     ImageView img_current_weather;
 
-    LinearLayout mFutureDay1;
-    LinearLayout mFutureDay2;
-    LinearLayout mFutureDay3;
-
-    TextView tvDay1Week;
-    TextView tvDay1Weather;
-    TextView tvDay1Temp;
-    ImageView imgWea1;
-
-    TextView tvDay2Week;
-    TextView tvDay2Weather;
-    TextView tvDay2Temp;
-    ImageView imgWea2;
-
-    TextView tvDay3Week;
-    TextView tvDay3Weather;
-    TextView tvDay3Temp;
-    ImageView imgWea3;
+    @BindView(R.id.weather_future_day1)
+    WeatherFutureView futureViewDay1;
+    @BindView(R.id.weather_future_day2)
+    WeatherFutureView futureViewDay2;
+    @BindView(R.id.weather_future_day3)
+    WeatherFutureView futureViewDay3;
 
     private String strCurrentHandle;
 
@@ -82,9 +81,7 @@ public class WeatherActivity extends AppCompatActivity {
             actionBar.setTitle("Weather");
         }
 
-        initViews();
-
-
+        ButterKnife.bind(this);
 
         strCurrentHandle = getIntent().getStringExtra("Name");
 
@@ -119,42 +116,6 @@ public class WeatherActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-    private void initViews() {
-        tvCurrentCity = (TextView)findViewById(R.id.weather_currentCity);
-        tvDate = (TextView)findViewById(R.id.weather_currentDate);
-        tvCurWeather = (TextView)findViewById(R.id.weather_currentWeather);
-        tvCurtemp = (TextView)findViewById(R.id.weather_temperature);
-        tvCurWind = (TextView)findViewById(R.id.weather_currentWind);
-        tvCurPM = (TextView)findViewById(R.id.weather_pm25);
-        tvUpdateTime = (TextView) findViewById(R.id.weather_updateTime);
-
-        img_current_weather = (ImageView) findViewById(R.id.weather_pictureUrl);
-
-        mFutureDay1 = (LinearLayout) findViewById(R.id.weather_future_day1);
-        mFutureDay2 = (LinearLayout) findViewById(R.id.weather_future_day2);
-        mFutureDay3 = (LinearLayout) findViewById(R.id.weather_future_day3);
-
-        tvDay1Week = (TextView)mFutureDay1.findViewById(R.id.weather_day_Date);
-        tvDay1Weather = (TextView)mFutureDay1.findViewById(R.id.weather_day_Weather);
-        tvDay1Temp = (TextView)mFutureDay1.findViewById(R.id.weather_day_Temp);
-
-        tvDay2Week = (TextView)mFutureDay2.findViewById(R.id.weather_day_Date);
-        tvDay2Weather = (TextView)mFutureDay2.findViewById(R.id.weather_day_Weather);
-        tvDay2Temp = (TextView)mFutureDay2.findViewById(R.id.weather_day_Temp);
-
-        tvDay3Week = (TextView)mFutureDay3.findViewById(R.id.weather_day_Date);
-        tvDay3Weather = (TextView)mFutureDay3.findViewById(R.id.weather_day_Weather);
-        tvDay3Temp = (TextView)mFutureDay3.findViewById(R.id.weather_day_Temp);
-
-        imgWea1 = (ImageView) mFutureDay1.findViewById(R.id.weather_day_Picture);
-        imgWea2 = (ImageView) mFutureDay2.findViewById(R.id.weather_day_Picture);
-        imgWea3 = (ImageView) mFutureDay3.findViewById(R.id.weather_day_Picture);
-
-
-    }
-
 
     private class ProgressTask extends AsyncTask<String,Integer,WeatherInfo> {
 
@@ -352,19 +313,6 @@ public class WeatherActivity extends AppCompatActivity {
             tvCurWind.setText(info.getStrCurWind());
             tvCurPM.setText(info.getStrPM());
 
-
-            tvDay1Week.setText(info.getStrWeek1());
-            tvDay1Weather.setText(info.getStrWeather1());
-            tvDay1Temp.setText(info.getStrTemp1());
-
-            tvDay2Week.setText(info.getStrWeek2());
-            tvDay2Weather.setText(info.getStrWeather2());
-            tvDay2Temp.setText(info.getStrTemp2());
-
-            tvDay3Week.setText(info.getStrWeek3());
-            tvDay3Weather.setText(info.getStrWeather3());
-            tvDay3Temp.setText(info.getStrTemp3());
-
             String strUrl = "WeatherPic/"+info.getStrImgUrl();
             String strUrl1 = "WeatherPic/"+info.getStrImgUrl1();
             String strUrl2 = "WeatherPic/"+info.getStrImgUrl2();
@@ -378,15 +326,15 @@ public class WeatherActivity extends AppCompatActivity {
 
                 is = getAssets().open(strUrl1);
                 bitmap=BitmapFactory.decodeStream(is);
-                imgWea1.setImageBitmap(bitmap);
+                futureViewDay1.setData(info.getStrWeek1(),info.getStrWeather1(),bitmap, info.getStrTemp1());
 
                 is = getAssets().open(strUrl2);
                 bitmap=BitmapFactory.decodeStream(is);
-                imgWea2.setImageBitmap(bitmap);
+                futureViewDay2.setData(info.getStrWeek2(),info.getStrWeather2(),bitmap, info.getStrTemp2());
 
                 is = getAssets().open(strUrl3);
                 bitmap=BitmapFactory.decodeStream(is);
-                imgWea3.setImageBitmap(bitmap);
+                futureViewDay3.setData(info.getStrWeek3(),info.getStrWeather3(),bitmap, info.getStrTemp3());
 
             } catch (IOException e) {
                 e.printStackTrace();
