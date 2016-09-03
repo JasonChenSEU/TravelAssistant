@@ -1,5 +1,7 @@
 package com.jason.listviewtest.model;
 
+import java.util.List;
+
 /**
  * Created by Jason on 2016/5/1.
  */
@@ -113,5 +115,63 @@ public class WeatherInfo {
     {
         String s = strCurCity + strCurDate + strCurWeek + strWeek1 + strWeek2 + strWeek3;
         return s ;
+    }
+
+    public void buildWithRawInfo(WeatherRawInfo info){
+        WeatherRawInfo.ResultsBean cityResult = info.getResults().get(0);
+        this.setStrCurCity(cityResult.getCurrentCity());
+        this.setStrCurDate(info.getDate());
+
+        if(!cityResult.getPm25().isEmpty())
+            this.setStrCurPM("PM2.5: " + cityResult.getPm25());
+        else
+            this.setStrCurPM("PM2.5: N/A");
+
+        List<WeatherRawInfo.ResultsBean.WeatherDataBean> list = cityResult.getWeather_data();
+        if(list.size() == 4){
+
+            //实时温度
+            String strTemp = cityResult.getWeather_data().get(0).getDate();
+            String strNew = strTemp.substring(strTemp.indexOf("：")+1, strTemp.lastIndexOf(")"));
+            this.setStrCurWeek(strNew.replace('℃','°'));
+
+            this.setStrWeek1(list.get(1).getDate());
+            this.setStrWeek2(list.get(2).getDate());
+            this.setStrWeek3(list.get(3).getDate());
+
+            this.setStrCurWeather(list.get(0).getWeather());
+            this.setStrWeather1(list.get(1).getWeather());
+            this.setStrWeather2(list.get(2).getWeather());
+            this.setStrWeather3(list.get(3).getWeather());
+
+            this.setStrCurTemp(list.get(0).getTemperature());
+            this.setStrTemp1(list.get(1).getTemperature());
+            this.setStrTemp2(list.get(2).getTemperature());
+            this.setStrTemp3(list.get(3).getTemperature());
+
+            this.setStrCurWind(list.get(0).getWind());
+            this.setStrWind1(list.get(1).getWind());
+            this.setStrWind2(list.get(2).getWind());
+            this.setStrWind3(list.get(3).getWind());
+
+            //ImgPicUrl
+            String strTempUrl = list.get(0).getDayPictureUrl();
+            String strNeed = strTempUrl.substring(strTempUrl.lastIndexOf("/")+1,strTempUrl.length());
+            this.setStrImgUrl(strNeed);
+
+            strTempUrl = list.get(1).getDayPictureUrl();
+            strNeed = strTempUrl.substring(strTempUrl.lastIndexOf("/")+1,strTempUrl.length());
+            this.setStrImgUrl1(strNeed);
+
+            strTempUrl = list.get(2).getDayPictureUrl();
+            strNeed = strTempUrl.substring(strTempUrl.lastIndexOf("/")+1,strTempUrl.length());
+            this.setStrImgUrl2(strNeed);
+
+            strTempUrl = list.get(3).getDayPictureUrl();
+            strNeed = strTempUrl.substring(strTempUrl.lastIndexOf("/")+1,strTempUrl.length());
+            this.setStrImgUrl3(strNeed);
+        }
+
+
     }
 }
