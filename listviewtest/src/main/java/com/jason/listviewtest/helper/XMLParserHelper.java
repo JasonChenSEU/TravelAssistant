@@ -1,12 +1,12 @@
-package com.jason.listviewtest.Helpter;
+package com.jason.listviewtest.helper;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
 
-import com.jason.listviewtest.model.City;
+import com.jason.listviewtest.model.beans.City;
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.Spot;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import org.xmlpull.v1.XmlPullParserException;
 

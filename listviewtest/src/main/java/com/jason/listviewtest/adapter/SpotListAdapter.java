@@ -2,7 +2,7 @@ package com.jason.listviewtest.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;

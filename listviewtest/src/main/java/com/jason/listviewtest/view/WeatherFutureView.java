@@ -1,4 +1,4 @@
-package com.jason.listviewtest.model;
+package com.jason.listviewtest.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -18,13 +18,13 @@ import butterknife.ButterKnife;
 public class WeatherFutureView extends LinearLayout {
 
     @BindView(R.id.weather_day_Date)
-    TextView tvDate;
+    public TextView tvDate;
     @BindView(R.id.weather_day_Picture)
-    ImageView imgDayPic;
+    public ImageView imgDayPic;
     @BindView(R.id.weather_day_Weather)
-    TextView tvDayWeather;
+    public TextView tvDayWeather;
     @BindView(R.id.weather_day_Temp)
-    TextView tvTemp;
+    public TextView tvTemp;
 
 
     public WeatherFutureView(Context context) {

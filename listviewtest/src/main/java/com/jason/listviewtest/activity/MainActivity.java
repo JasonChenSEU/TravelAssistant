@@ -8,12 +8,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
-import com.jason.listviewtest.Helpter.APIHelper;
+import com.jason.listviewtest.helper.APIHelper;
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.db.TravelDB;
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.Spot;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import org.json.JSONArray;
 import org.json.JSONException;

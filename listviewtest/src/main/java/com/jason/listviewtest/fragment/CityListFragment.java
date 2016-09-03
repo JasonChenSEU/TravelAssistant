@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.CityDetailActivity;
 import com.jason.listviewtest.adapter.CityListAdapter;
 import com.jason.listviewtest.imageloader.ImageLoader;
-import com.jason.listviewtest.model.City;
+import com.jason.listviewtest.model.beans.City;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
 import com.jason.listviewtest.view.HeaderView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;

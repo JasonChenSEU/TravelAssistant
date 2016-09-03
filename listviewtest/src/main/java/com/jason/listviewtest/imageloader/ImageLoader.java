@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.libcore.io.DiskLruCache;
 
 import java.io.BufferedInputStream;

@@ -11,15 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.CityDetailActivity;
 import com.jason.listviewtest.activity.SpotDetailActivity;
 import com.jason.listviewtest.activity.SpotDetailScrollActivity;
 import com.jason.listviewtest.imageloader.ImageLoader;
-import com.jason.listviewtest.model.City;
-import com.jason.listviewtest.model.SpotBase;
-import com.pkmmte.view.CircularImageView;
+import com.jason.listviewtest.model.beans.City;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -45,7 +44,7 @@ public class RecommendFragment extends Fragment {
     private LinearLayout mLayout_RMB_Spot;
 
     private String[] mHotSpots = {"鼓浪屿","庐山","九寨沟"};
-    private String[] mAound = {"南京","扬州","苏州"};
+    private String[] mAround = {"南京","扬州","苏州"};
     private String[] mRMBSpot = {"长江三峡","漓江","天涯海角"};
 
 
@@ -191,7 +190,7 @@ public class RecommendFragment extends Fragment {
                 break;
             case 1:
                 LinearLayout layout4 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_1);
-                final City c1 = Utils.findCity(mAound[0]);
+                final City c1 = Utils.findCity(mAround[0]);
                 strDes = c1.getStrCitySimpleDes();
                 ((TextView)layout4.findViewById(R.id.main_page_list_title)).setText(c1.getStrCityName());
                 ((TextView)layout4.findViewById(R.id.main_page_list_title_des)).setText(strDes);
@@ -206,7 +205,7 @@ public class RecommendFragment extends Fragment {
                 });
 
                 LinearLayout layout5 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_2);
-                final City c2 = Utils.findCity(mAound[1]);
+                final City c2 = Utils.findCity(mAround[1]);
                 strDes = c2.getStrCitySimpleDes();
                 ((TextView)layout5.findViewById(R.id.main_page_list_title)).setText(c2.getStrCityName());
                 ((TextView)layout5.findViewById(R.id.main_page_list_title_des)).setText(strDes);
@@ -221,7 +220,7 @@ public class RecommendFragment extends Fragment {
                 });
 
                 LinearLayout layout6 = (LinearLayout) innerLayout.findViewById(R.id.main_page_list_3);
-                final City c3 = Utils.findCity(mAound[2]);
+                final City c3 = Utils.findCity(mAround[2]);
                 strDes = c3.getStrCitySimpleDes();
                 ((TextView)layout6.findViewById(R.id.main_page_list_title)).setText(c3.getStrCityName());
                 ((TextView)layout6.findViewById(R.id.main_page_list_title_des)).setText(strDes);

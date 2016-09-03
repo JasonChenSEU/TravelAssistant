@@ -2,41 +2,27 @@ package com.jason.listviewtest.activity;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.preference.PreferenceGroup;
-import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Xml;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.jason.listviewtest.Helpter.APIHelper;
+import com.jason.listviewtest.helper.APIHelper;
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.model.GetWeatherInfo;
-import com.jason.listviewtest.model.WeatherFutureView;
-import com.jason.listviewtest.model.WeatherInfo;
-import com.jason.listviewtest.model.WeatherRawInfo;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
+import com.jason.listviewtest.model.interfaces.GetWeatherInfo;
+import com.jason.listviewtest.view.WeatherFutureView;
+import com.jason.listviewtest.model.beans.WeatherInfo;
+import com.jason.listviewtest.model.beans.WeatherRawInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 
 import butterknife.BindView;

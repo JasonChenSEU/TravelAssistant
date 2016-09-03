@@ -19,20 +19,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.jason.listviewtest.Helpter.APIHelper;
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.APIHelper;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.adapter.SpotContentAdapter;
 import com.jason.listviewtest.db.TravelDB;
 import com.jason.listviewtest.imageloader.ImageLoader;
-import com.jason.listviewtest.model.GetSpotDetailInfo;
-import com.jason.listviewtest.model.GetSpotTicketInfo;
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotBase;
-import com.jason.listviewtest.model.SpotDetailInfoFromBAIDU;
-import com.jason.listviewtest.model.SpotTicketInfoFromQUNAER;
+import com.jason.listviewtest.model.interfaces.GetSpotDetailInfo;
+import com.jason.listviewtest.model.interfaces.GetSpotTicketInfo;
+import com.jason.listviewtest.model.beans.Spot;
+import com.jason.listviewtest.model.beans.SpotBase;
+import com.jason.listviewtest.model.beans.SpotDetailInfoFromBAIDU;
+import com.jason.listviewtest.model.beans.SpotTicketInfoFromQUNAER;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +44,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadFactory;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;

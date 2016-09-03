@@ -5,8 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.Spot;
 
 import java.util.ArrayList;
 import java.util.List;

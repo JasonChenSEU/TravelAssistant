@@ -7,9 +7,8 @@ import android.view.ViewGroup;
 
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.view.SpotContentView;
-import com.jason.listviewtest.activity.SpotDetailActivity;
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotContent;
+import com.jason.listviewtest.model.beans.Spot;
+import com.jason.listviewtest.model.beans.SpotContent;
 
 import java.util.ArrayList;
 import java.util.List;

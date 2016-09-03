@@ -1,4 +1,4 @@
-package com.jason.listviewtest.Helpter;
+package com.jason.listviewtest.helper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,10 +9,8 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-import com.jason.listviewtest.db.TravelDB;
-import com.jason.listviewtest.model.City;
-import com.jason.listviewtest.model.Spot;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.City;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import java.util.ArrayList;
 import java.util.Collections;

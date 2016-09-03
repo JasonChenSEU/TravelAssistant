@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,14 +17,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.libcore.io.DiskLruCache;
-import com.jason.listviewtest.model.City;
+import com.jason.listviewtest.model.beans.City;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import java.util.ArrayList;
 import java.util.List;

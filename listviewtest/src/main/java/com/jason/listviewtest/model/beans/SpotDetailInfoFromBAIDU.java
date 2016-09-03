@@ -1,4 +1,4 @@
-package com.jason.listviewtest.model;
+package com.jason.listviewtest.model.beans;
 
 import com.google.gson.annotations.SerializedName;
 

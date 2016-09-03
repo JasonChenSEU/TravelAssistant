@@ -1,4 +1,4 @@
-package com.jason.listviewtest.model;
+package com.jason.listviewtest.model.beans;
 
 /**
  * Created by Jason on 2016/7/12.

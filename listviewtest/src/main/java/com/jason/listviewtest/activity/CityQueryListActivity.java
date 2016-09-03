@@ -1,7 +1,6 @@
 package com.jason.listviewtest.activity;
 
 import android.content.Intent;
-import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +10,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
-import com.jason.listviewtest.model.City;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.SpotBase;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,6 @@
-package com.jason.listviewtest.model;
+package com.jason.listviewtest.model.interfaces;
+
+import com.jason.listviewtest.model.beans.SpotDetailInfoFromBAIDU;
 
 import retrofit2.http.GET;
 import retrofit2.http.Query;

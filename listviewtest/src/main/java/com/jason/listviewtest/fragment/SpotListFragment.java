@@ -2,9 +2,7 @@ package com.jason.listviewtest.fragment;
 
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.jason.listviewtest.Helpter.Utils;
+import com.jason.listviewtest.helper.Utils;
 import com.jason.listviewtest.R;
 import com.jason.listviewtest.activity.SpotDetailActivity;
 import com.jason.listviewtest.activity.SpotDetailScrollActivity;
 import com.jason.listviewtest.adapter.SpotListAdapter;
 import com.jason.listviewtest.model.RecyclerViewItemClickListener;
-import com.jason.listviewtest.model.SpotBase;
+import com.jason.listviewtest.model.beans.SpotBase;
 import com.jason.listviewtest.view.HeaderView;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter;
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
